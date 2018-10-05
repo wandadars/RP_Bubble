@@ -11,7 +11,6 @@ Markus Stokmaier, Weimar, March 2018
 """
 import numpy as np
 import matplotlib.pyplot as plt
-
 from RP_lib import Bubble
 
 radiation_on = True
@@ -26,6 +25,7 @@ b3 = Bubble()
 bli = [b1,b2,b3]
 amps = [0.85,1.1,1.4]
 for i, b in enumerate(bli):
+    print('Computing Solution for bubble amplitude: ' + str(amps[i]))
     b.bubble_radiates = radiation_on
     b.amp = amps[i] * b.p0
     b.R0 = 8e-6
