@@ -21,14 +21,12 @@ there is no abrupt decay in the rebounding amplitude for the first rebound.
 Markus Stokmaier, Weimar, March 2018
 """
 import numpy as np
-from numpy import pi, sin
-from numpy import array, zeros, linspace
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 from cPickle import Pickler, Unpickler
 
 def sphere_volume(r):
-    return (4./3.)*pi*r**3
+    return (4./3.)*np.pi*r**3
 
 class Bubble(object):
     def __init__(self):
@@ -63,7 +61,7 @@ class Bubble(object):
         self.bubble_radiates=True
 
     def p_acoustic(self,t):
-        return -self.amp*sin(2*pi*self.f*t)
+        return -self.amp*np.sin(2*np.pi*self.f*t)
 
     def dR(self, r, t):
         R = r[0]
@@ -87,7 +85,7 @@ class Bubble(object):
         """fourth order Runge-Kutta scheme for time-integration"""
         func=self.dR
         t=self.t; t.append(self.t_start)
-        w=self.R; w.append(array([self.R_start, self.dR_start]))
+        w=self.R; w.append(np.array([self.R_start, self.dR_start]))
         self.Pg.append(self.calculate_Pgas(self.R_start))
         while t[-1]<self.t_start+self.t_run:
             if w[-1][0]<0.6*self.R0:
@@ -106,9 +104,9 @@ class Bubble(object):
             self.Pg.append(self.calculate_Pgas(w[-1][0]))
 
     def list2array(self):
-        self.t=array(self.t)
-        self.R=array(self.R)
-        self.Pg=array(self.Pg)
+        self.t=np.array(self.t)
+        self.R=np.array(self.R)
+        self.Pg=np.array(self.Pg)
 
     def pickle_self(self,suffix):
         ofile=open('pickled_bubble'+suffix+'.txt','w')
